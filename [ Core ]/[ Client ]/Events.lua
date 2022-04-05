@@ -25,7 +25,8 @@ RegisterNetEvent('DokusCore:UsableItems:UseItem', function(Data)
         table.insert(Meta, {
           Hunger = Hunger, Thirst = Thirst,
           Stamina = Stamina, Health = Health,
-          GHI = GHI, GHO = GHO, GSI = GSI, GSO = GSO
+          GHI = GHI, GHO = GHO, GSI = GSI, GSO = GSO,
+          Amount = Amount
         })
       end
 

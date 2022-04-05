@@ -9,6 +9,7 @@
 This plugin is depending on the [DokusCore](https://github.com/dokucore) Framework!
 Make sure that DokusCore is started before this plugin!
 
+---
 # Server Prebuild:
 If you do not want to build your own server you don't have to, we already did all   <br>
 the work for you! Download our [Prebuild](https://github.com/DokusCore/Server-Prebuild) server package and you will be setup  <br>
