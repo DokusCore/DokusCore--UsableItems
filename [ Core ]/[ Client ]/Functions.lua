@@ -42,6 +42,17 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 function TaskConsumeItem(PedID, Prop, Pos, Ani, IsMeta, Meta)
+
+  -- Do Single animations without prop
+  if ((Pos == nil) and (Prop == nil)) then
+    if (Ani ~= nil) then
+      TaskItemInteraction(PedID, nil, GetHashKey(Ani), true, 0, 0) Wait(1000)
+      if ((IsMeta) and (IsMeta ~= nil)) then ApplyMetabolism(Meta) end
+      return
+    end
+  end
+
+  -- Do animations with prop
   if (Prop == nil) then Notify('Can not deploy, object hash is missing!') return end
   if (Ani == nil) then Notify('Can not deploy, animation hash is missing!') return end
   if (Pos == nil) then Notify('Can not deploy, object position hash is missing!') return end
@@ -53,6 +64,7 @@ end
 --------------------------------------------------------------------------------
 function ApplyMetabolism(Data)
   local MetaSet = false
+  local Amount = Data[1].Amount
   local Hunger, Thirst = Data[1].Hunger, Data[1].Thirst
   local Stamina, Health = Data[1].Stamina, Data[1].Health
   local GHI, GHO, GSI, GSO = Data[1].GHI, Data[1].GHO, Data[1].GSI, Data[1].GSO
@@ -67,14 +79,14 @@ function ApplyMetabolism(Data)
   if (Health ~= nil) then MetaSet = true end
 
   if not (MetaSet) then Notify('Unable to set Metabolism as the values are missing!') return end
-  if (Hunger ~= nil) then TriggerEvent('DokusCore:Metabolism:Edit:Hunger', { Hunger }) end
-  if (Thirst ~= nil) then TriggerEvent('DokusCore:Metabolism:Edit:Thirst', { Thirst }) end
-  if (Stamina ~= nil) then TriggerEvent('DokusCore:Metabolism:Edit:Stamina', { Stamina }) end
-  if (Health ~= nil) then TriggerEvent('DokusCore:Metabolism:Edit:Health', { Health }) end
-  if (Hunger ~= nil) then TriggerEvent('DokusCore:Metabolism:Set:InnerGold:Stamina', { GSI }) end
-  if (Thirst ~= nil) then TriggerEvent('DokusCore:Metabolism:Set:OuterGold:Stamina', { GSO }) end
-  if (Stamina ~= nil) then TriggerEvent('DokusCore:Metabolism:Set:InnerGold:Health', { GHI }) end
-  if (Health ~= nil) then TriggerEvent('DokusCore:Metabolism:Set:OuterGold:Health', { GHO }) end
+  if (Hunger ~= nil) then TriggerEvent('DokusCore:Metabolism:Edit:Hunger', { (Hunger * Amount) }) end
+  if (Thirst ~= nil) then TriggerEvent('DokusCore:Metabolism:Edit:Thirst', { (Thirst * Amount) }) end
+  if (Stamina ~= nil) then TriggerEvent('DokusCore:Metabolism:Edit:Stamina', { (Stamina * Amount) }) end
+  if (Health ~= nil) then TriggerEvent('DokusCore:Metabolism:Edit:Health', { (Health * Amount) }) end
+  if (Hunger ~= nil) then TriggerEvent('DokusCore:Metabolism:Set:InnerGold:Stamina', { (GSI * Amount) }) end
+  if (Thirst ~= nil) then TriggerEvent('DokusCore:Metabolism:Set:OuterGold:Stamina', { (GSO * Amount) }) end
+  if (Stamina ~= nil) then TriggerEvent('DokusCore:Metabolism:Set:InnerGold:Health', { (GHI * Amount) }) end
+  if (Health ~= nil) then TriggerEvent('DokusCore:Metabolism:Set:OuterGold:Health', { (GHO * Amount) }) end
 end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
